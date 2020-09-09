@@ -1,0 +1,15 @@
+{
+  "name": "sphinx-btc-bot",
+  "version": "1.0.0",
+  "description": "Sphinx Bitcoin Price Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Feenstra",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "sphinx-bot": "^0.1.27"
+  }
+}
