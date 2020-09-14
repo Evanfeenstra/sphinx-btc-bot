@@ -4,17 +4,24 @@
   "description": "Sphinx Bitcoin Price Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build ./index.js -s",
+    "build": "npm run clean && npm run build-babel",
+    "start": "npm run build && node ./build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Evan Feenstra",
   "license": "ISC",
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "sphinx-bot": "^0.2.2"
   },
   "engines": {
     "node": "12.x"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
   }
 }
