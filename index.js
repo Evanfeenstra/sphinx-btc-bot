@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime.js';
 import * as Sphinx from 'sphinx-bot'
 import * as fetch from 'node-fetch'
 const msg_types = Sphinx.MSG_TYPE
