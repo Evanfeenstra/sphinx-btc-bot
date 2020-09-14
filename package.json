@@ -9,7 +9,11 @@
   "author": "Evan Feenstra",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "node-fetch": "^2.6.1",
-    "sphinx-bot": "^0.1.27"
+    "sphinx-bot": "^0.2.1"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
