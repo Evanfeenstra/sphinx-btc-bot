@@ -22,6 +22,7 @@ function init() {
   client.login(sphinxToken)
 
   client.on(msg_types.MESSAGE, async (message) => {
+    console.log("A MESSAGE WAS RECEIVED!!!!!!",message)
     const arr = message.content.split(' ')
     if (arr.length < 2) return
     if (arr[0]!=='/btc') return
