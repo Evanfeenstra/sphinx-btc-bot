@@ -60,7 +60,7 @@ function init() {
             case 5:
               cmd = arr[1];
               _context.t0 = cmd;
-              _context.next = _context.t0 === 'price' ? 9 : 32;
+              _context.next = _context.t0 === 'price' ? 9 : 31;
               break;
 
             case 9:
@@ -104,22 +104,21 @@ function init() {
                 inline: true,
                 color: changeColor
               }]).setThumbnail(botSVG);
-              console.log("GENEERATED EMBED", _embed);
               message.channel.send({
                 embed: _embed
               });
-              _context.next = 31;
+              _context.next = 30;
               break;
 
-            case 28:
-              _context.prev = 28;
+            case 27:
+              _context.prev = 27;
               _context.t1 = _context["catch"](10);
               console.log('BTC bot error', _context.t1);
 
-            case 31:
+            case 30:
               return _context.abrupt("return");
 
-            case 32:
+            case 31:
               embed = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('BitcoinBot Commands:').addFields([{
                 name: 'Print BTC price',
                 value: '/btc price'
@@ -132,12 +131,12 @@ function init() {
               });
               return _context.abrupt("return");
 
-            case 35:
+            case 34:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[10, 28]]);
+      }, _callee, null, [[10, 27]]);
     }));
 
     return function (_x) {

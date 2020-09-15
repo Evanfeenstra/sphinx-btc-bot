@@ -49,7 +49,6 @@ function init() {
                 { name: '24 Hour Change:', value: percentChange24String, inline:true, color:changeColor }
               ])
               .setThumbnail(botSVG)
-            console.log("GENEERATED EMBED",embed)
             message.channel.send({ embed })
         } catch(e){
             console.log('BTC bot error',e)
