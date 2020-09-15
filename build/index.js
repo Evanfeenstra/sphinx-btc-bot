@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 require("regenerator-runtime/runtime.js");
 
 var Sphinx = _interopRequireWildcard(require("sphinx-bot"));
@@ -11,6 +9,8 @@ var fetch = _interopRequireWildcard(require("node-fetch"));
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -60,7 +60,7 @@ function init() {
             case 5:
               cmd = arr[1];
               _context.t0 = cmd;
-              _context.next = _context.t0 === 'price' ? 9 : 31;
+              _context.next = _context.t0 === 'price' ? 9 : 32;
               break;
 
             case 9:
@@ -104,21 +104,22 @@ function init() {
                 inline: true,
                 color: changeColor
               }]).setThumbnail(botSVG);
+              console.log(message.channel.send, _typeof(message.channel.send));
               message.channel.send({
                 embed: _embed
               });
-              _context.next = 30;
+              _context.next = 31;
               break;
 
-            case 27:
-              _context.prev = 27;
+            case 28:
+              _context.prev = 28;
               _context.t1 = _context["catch"](10);
               console.log('BTC bot error', _context.t1);
 
-            case 30:
+            case 31:
               return _context.abrupt("return");
 
-            case 31:
+            case 32:
               embed = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('BitcoinBot Commands:').addFields([{
                 name: 'Print BTC price',
                 value: '/btc price'
@@ -131,12 +132,12 @@ function init() {
               });
               return _context.abrupt("return");
 
-            case 34:
+            case 35:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[10, 27]]);
+      }, _callee, null, [[10, 28]]);
     }));
 
     return function (_x) {
