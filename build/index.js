@@ -40,34 +40,33 @@ function init() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log("A MESSAGE WAS RECEIVED!!!!!!", message);
               arr = message.content.split(' ');
 
               if (!(arr.length < 2)) {
-                _context.next = 4;
+                _context.next = 3;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 4:
+            case 3:
               if (!(arr[0] !== '/btc')) {
-                _context.next = 6;
+                _context.next = 5;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 6:
+            case 5:
               cmd = arr[1];
               _context.t0 = cmd;
-              _context.next = _context.t0 === 'price' ? 10 : 32;
+              _context.next = _context.t0 === 'price' ? 9 : 32;
               break;
 
-            case 10:
-              console.log("price", arr[2]);
-              _context.prev = 11;
-              _context.next = 14;
+            case 9:
+              console.log("price");
+              _context.prev = 10;
+              _context.next = 13;
               return fetch(url + '?symbol=BTC&convert=USD', {
                 headers: {
                   'X-CMC_PRO_API_KEY': token,
@@ -75,21 +74,21 @@ function init() {
                 }
               });
 
-            case 14:
+            case 13:
               r = _context.sent;
 
               if (r.ok) {
-                _context.next = 17;
+                _context.next = 16;
                 break;
               }
 
               return _context.abrupt("return");
 
-            case 17:
-              _context.next = 19;
+            case 16:
+              _context.next = 18;
               return r.json();
 
-            case 19:
+            case 18:
               j = _context.sent;
               price = '$' + j.data.BTC.quote.USD.price.toFixed(2);
               percentChange24 = j.data.BTC.quote.USD.percent_change_24h;
@@ -105,6 +104,7 @@ function init() {
                 inline: true,
                 color: changeColor
               }]).setThumbnail(botSVG);
+              console.log("GENEERATED EMBED", _embed);
               message.channel.send({
                 embed: _embed
               });
@@ -113,7 +113,7 @@ function init() {
 
             case 28:
               _context.prev = 28;
-              _context.t1 = _context["catch"](11);
+              _context.t1 = _context["catch"](10);
               console.log('BTC bot error', _context.t1);
 
             case 31:
@@ -137,7 +137,7 @@ function init() {
               return _context.stop();
           }
         }
-      }, _callee, null, [[11, 28]]);
+      }, _callee, null, [[10, 28]]);
     }));
 
     return function (_x) {
