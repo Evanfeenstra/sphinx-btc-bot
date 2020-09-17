@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 require("regenerator-runtime/runtime.js");
 
 var Sphinx = _interopRequireWildcard(require("sphinx-bot"));
@@ -9,8 +11,6 @@ var fetch = _interopRequireWildcard(require("node-fetch"));
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -32,41 +32,65 @@ function init() {
   initted = true;
   var client = new Sphinx.Client();
   client.login(sphinxToken);
-  client.on(msg_types.MESSAGE, /*#__PURE__*/function () {
+  client.on(msg_types.INSTALL, /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(message) {
-      var arr, cmd, r, j, price, percentChange24, percentChange24String, changeColor, _embed, embed;
-
+      var embed;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              embed = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setDescription('Welcome to Bitcoin Bot!').setThumbnail(botSVG);
+              message.channel.send({
+                embed: embed
+              });
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  client.on(msg_types.MESSAGE, /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(message) {
+      var arr, cmd, r, j, price, percentChange24, percentChange24String, changeColor, _embed, embed;
+
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
               arr = message.content.split(' ');
 
               if (!(arr.length < 2)) {
-                _context.next = 3;
+                _context2.next = 3;
                 break;
               }
 
-              return _context.abrupt("return");
+              return _context2.abrupt("return");
 
             case 3:
               if (!(arr[0] !== '/btc')) {
-                _context.next = 5;
+                _context2.next = 5;
                 break;
               }
 
-              return _context.abrupt("return");
+              return _context2.abrupt("return");
 
             case 5:
               cmd = arr[1];
-              _context.t0 = cmd;
-              _context.next = _context.t0 === 'price' ? 9 : 32;
+              _context2.t0 = cmd;
+              _context2.next = _context2.t0 === 'price' ? 9 : 31;
               break;
 
             case 9:
               console.log("price");
-              _context.prev = 10;
-              _context.next = 13;
+              _context2.prev = 10;
+              _context2.next = 13;
               return fetch(url + '?symbol=BTC&convert=USD', {
                 headers: {
                   'X-CMC_PRO_API_KEY': token,
@@ -75,21 +99,21 @@ function init() {
               });
 
             case 13:
-              r = _context.sent;
+              r = _context2.sent;
 
               if (r.ok) {
-                _context.next = 16;
+                _context2.next = 16;
                 break;
               }
 
-              return _context.abrupt("return");
+              return _context2.abrupt("return");
 
             case 16:
-              _context.next = 18;
+              _context2.next = 18;
               return r.json();
 
             case 18:
-              j = _context.sent;
+              j = _context2.sent;
               price = '$' + j.data.BTC.quote.USD.price.toFixed(2);
               percentChange24 = j.data.BTC.quote.USD.percent_change_24h;
               percentChange24String = percentChange24.toFixed(2) + '%';
@@ -104,22 +128,21 @@ function init() {
                 inline: true,
                 color: changeColor
               }]).setThumbnail(botSVG);
-              console.log(message.channel.send, _typeof(message.channel.send));
               message.channel.send({
                 embed: _embed
               });
-              _context.next = 31;
+              _context2.next = 30;
               break;
 
-            case 28:
-              _context.prev = 28;
-              _context.t1 = _context["catch"](10);
-              console.log('BTC bot error', _context.t1);
+            case 27:
+              _context2.prev = 27;
+              _context2.t1 = _context2["catch"](10);
+              console.log('BTC bot error', _context2.t1);
+
+            case 30:
+              return _context2.abrupt("return");
 
             case 31:
-              return _context.abrupt("return");
-
-            case 32:
               embed = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('BitcoinBot Commands:').addFields([{
                 name: 'Print BTC price',
                 value: '/btc price'
@@ -130,18 +153,18 @@ function init() {
               message.channel.send({
                 embed: embed
               });
-              return _context.abrupt("return");
+              return _context2.abrupt("return");
 
-            case 35:
+            case 34:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee, null, [[10, 28]]);
+      }, _callee2, null, [[10, 27]]);
     }));
 
-    return function (_x) {
-      return _ref.apply(this, arguments);
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
     };
   }());
 }
