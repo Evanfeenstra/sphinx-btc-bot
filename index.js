@@ -21,6 +21,14 @@ function init() {
   const client = new Sphinx.Client()
   client.login(sphinxToken)
 
+  client.on(msg_types.INSTALL, async (message) => {
+    const embed = new Sphinx.MessageEmbed()
+      .setAuthor('BitcoinBot')
+      .setDescription('Welcome to Bitcoin Bot!')
+      .setThumbnail(botSVG)
+    message.channel.send({ embed })
+  })
+
   client.on(msg_types.MESSAGE, async (message) => {
     const arr = message.content.split(' ')
     if (arr.length < 2) return
