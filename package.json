@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "regenerator-runtime": "^0.13.7",
-    "sphinx-bot": "^0.2.14"
+    "sphinx-bot": "^0.2.15"
   },
   "engines": {
     "node": "12.x"

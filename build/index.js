@@ -117,7 +117,7 @@ function init() {
               price = '$' + j.data.BTC.quote.USD.price.toFixed(2);
               percentChange24 = j.data.BTC.quote.USD.percent_change_24h;
               percentChange24String = percentChange24.toFixed(2) + '%';
-              changeColor = percentChange24 > 0 ? '#00c991' : '#7a2d2f';
+              changeColor = percentChange24 > 0 ? '#00c991' : '#e74744';
               _embed = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('Bitcoin Price:').addFields([{
                 name: 'Price:',
                 value: price,
