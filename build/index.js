@@ -89,7 +89,7 @@ function init() {
 
             case 9:
               console.log("price");
-              isAdmin = message.member && message.member.roles && message.member.roles.find(function (role) {
+              isAdmin = message.member.roles.find(function (role) {
                 return role.name === 'Admin';
               });
               console.log('=> IS ADMIN?', isAdmin);
