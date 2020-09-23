@@ -39,6 +39,8 @@ function init() {
 
       case 'price':
         console.log("price")
+        const isAdmin = message.member && message.member.roles && message.member.roles.find(role => role.name === 'Admin')
+        console.log('=> IS ADMIN?', isAdmin)
         try {
             const r = await fetch(url+'?symbol=BTC&convert=USD',{
                 headers:{'X-CMC_PRO_API_KEY': token, 'Accept': 'application/json'}

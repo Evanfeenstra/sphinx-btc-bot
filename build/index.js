@@ -58,7 +58,7 @@ function init() {
   }());
   client.on(msg_types.MESSAGE, /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(message) {
-      var arr, cmd, r, j, price, percentChange24, percentChange24String, changeColor, _embed, embed;
+      var arr, cmd, isAdmin, r, j, price, percentChange24, percentChange24String, changeColor, _embed, embed;
 
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -84,13 +84,17 @@ function init() {
             case 5:
               cmd = arr[1];
               _context2.t0 = cmd;
-              _context2.next = _context2.t0 === 'price' ? 9 : 31;
+              _context2.next = _context2.t0 === 'price' ? 9 : 33;
               break;
 
             case 9:
               console.log("price");
-              _context2.prev = 10;
-              _context2.next = 13;
+              isAdmin = message.member && message.member.roles && message.member.roles.find(function (role) {
+                return role.name === 'Admin';
+              });
+              console.log('=> IS ADMIN?', isAdmin);
+              _context2.prev = 12;
+              _context2.next = 15;
               return fetch(url + '?symbol=BTC&convert=USD', {
                 headers: {
                   'X-CMC_PRO_API_KEY': token,
@@ -98,21 +102,21 @@ function init() {
                 }
               });
 
-            case 13:
+            case 15:
               r = _context2.sent;
 
               if (r.ok) {
-                _context2.next = 16;
+                _context2.next = 18;
                 break;
               }
 
               return _context2.abrupt("return");
 
-            case 16:
-              _context2.next = 18;
+            case 18:
+              _context2.next = 20;
               return r.json();
 
-            case 18:
+            case 20:
               j = _context2.sent;
               price = '$' + j.data.BTC.quote.USD.price.toFixed(2);
               percentChange24 = j.data.BTC.quote.USD.percent_change_24h;
@@ -131,18 +135,18 @@ function init() {
               message.channel.send({
                 embed: _embed
               });
-              _context2.next = 30;
+              _context2.next = 32;
               break;
 
-            case 27:
-              _context2.prev = 27;
-              _context2.t1 = _context2["catch"](10);
+            case 29:
+              _context2.prev = 29;
+              _context2.t1 = _context2["catch"](12);
               console.log('BTC bot error', _context2.t1);
 
-            case 30:
+            case 32:
               return _context2.abrupt("return");
 
-            case 31:
+            case 33:
               embed = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('BitcoinBot Commands:').addFields([{
                 name: 'Print BTC price',
                 value: '/btc price'
@@ -155,12 +159,12 @@ function init() {
               });
               return _context2.abrupt("return");
 
-            case 34:
+            case 36:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[10, 27]]);
+      }, _callee2, null, [[12, 29]]);
     }));
 
     return function (_x2) {
