@@ -13,6 +13,7 @@
   "author": "Evan Feenstra",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "regenerator-runtime": "^0.13.7",

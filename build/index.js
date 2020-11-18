@@ -25,7 +25,9 @@ var initted = false;
 
 var token = process.env.TOKEN;
 var sphinxToken = process.env.SPHINX_TOKEN;
-var url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
+var url = 'https://pro-api.coinmarketcap.com/v1/';
+var crypto_route = 'cryptocurrency/quotes/latest';
+var global_route = 'global-metrics/quotes/latest';
 
 function init() {
   if (initted) return;
@@ -58,7 +60,7 @@ function init() {
   }());
   client.on(msg_types.MESSAGE, /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(message) {
-      var arr, cmd, isAdmin, r, j, price, percentChange24, percentChange24String, changeColor, _embed, _r, _j, _price, sats, _embed2, embed;
+      var arr, cmd, isAdmin, r, j, price, percentChange24, percentChange24String, changeColor, _embed, _r, _j, _price, sats, _embed2, _r2, _j2, d, _embed3, embed;
 
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -84,7 +86,7 @@ function init() {
             case 5:
               cmd = arr[1];
               _context2.t0 = cmd;
-              _context2.next = _context2.t0 === 'price' ? 9 : _context2.t0 === 'sats' ? 33 : 53;
+              _context2.next = _context2.t0 === 'price' ? 9 : _context2.t0 === 'sats' ? 33 : _context2.t0 === 'dominance' ? 53 : 72;
               break;
 
             case 9:
@@ -95,7 +97,7 @@ function init() {
               console.log('=> IS ADMIN?', isAdmin);
               _context2.prev = 12;
               _context2.next = 15;
-              return fetch(url + '?symbol=BTC&convert=USD', {
+              return fetch(url + crypto_route + '?symbol=BTC&convert=USD', {
                 headers: {
                   'X-CMC_PRO_API_KEY': token,
                   'Accept': 'application/json'
@@ -147,10 +149,10 @@ function init() {
               return _context2.abrupt("return");
 
             case 33:
-              console.log("price");
+              console.log("sats");
               _context2.prev = 34;
               _context2.next = 37;
-              return fetch(url + '?symbol=BTC&convert=USD', {
+              return fetch(url + crypto_route + '?symbol=BTC&convert=USD', {
                 headers: {
                   'X-CMC_PRO_API_KEY': token,
                   'Accept': 'application/json'
@@ -195,9 +197,59 @@ function init() {
               return _context2.abrupt("return");
 
             case 53:
+              console.log("dominance");
+              _context2.prev = 54;
+              _context2.next = 57;
+              return fetch(url + global_route, {
+                headers: {
+                  'X-CMC_PRO_API_KEY': token,
+                  'Accept': 'application/json'
+                }
+              });
+
+            case 57:
+              _r2 = _context2.sent;
+
+              if (_r2.ok) {
+                _context2.next = 60;
+                break;
+              }
+
+              return _context2.abrupt("return");
+
+            case 60:
+              _context2.next = 62;
+              return _r2.json();
+
+            case 62:
+              _j2 = _context2.sent;
+              d = _j2.data.btc_dominance.toFixed(2) + '%';
+              _embed3 = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('BTC Dominance:').addFields([{
+                name: 'BTC Dominance:',
+                value: d,
+                inline: true
+              }]).setThumbnail(botSVG);
+              message.channel.send({
+                embed: _embed3
+              });
+              _context2.next = 71;
+              break;
+
+            case 68:
+              _context2.prev = 68;
+              _context2.t3 = _context2["catch"](54);
+              console.log('BTC bot error', _context2.t3);
+
+            case 71:
+              return _context2.abrupt("return");
+
+            case 72:
               embed = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('BitcoinBot Commands:').addFields([{
                 name: 'Print BTC price',
                 value: '/btc price'
+              }, {
+                name: 'Sats per dollar',
+                value: '/btc sats'
               }, {
                 name: 'Help',
                 value: '/btc help'
@@ -207,12 +259,12 @@ function init() {
               });
               return _context2.abrupt("return");
 
-            case 56:
+            case 75:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[12, 29], [34, 49]]);
+      }, _callee2, null, [[12, 29], [34, 49], [54, 68]]);
     }));
 
     return function (_x2) {

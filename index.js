@@ -12,7 +12,9 @@ let initted = false
 
 const token = process.env.TOKEN
 const sphinxToken = process.env.SPHINX_TOKEN
-const url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+const url = 'https://pro-api.coinmarketcap.com/v1/'
+const crypto_route = 'cryptocurrency/quotes/latest'
+const global_route = 'global-metrics/quotes/latest'
 
 function init() {
   if (initted) return
@@ -42,7 +44,7 @@ function init() {
         const isAdmin = message.member.roles.find(role => role.name === 'Admin')
         console.log('=> IS ADMIN?', isAdmin)
         try {
-          const r = await fetch(url + '?symbol=BTC&convert=USD', {
+          const r = await fetch(url + crypto_route + '?symbol=BTC&convert=USD', {
             headers: { 'X-CMC_PRO_API_KEY': token, 'Accept': 'application/json' }
           })
           if (!r.ok) return
@@ -66,20 +68,42 @@ function init() {
         return
 
       case 'sats':
-        console.log("price")
+        console.log("sats")
         try {
-          const r = await fetch(url + '?symbol=BTC&convert=USD', {
+          const r = await fetch(url + crypto_route + '?symbol=BTC&convert=USD', {
             headers: { 'X-CMC_PRO_API_KEY': token, 'Accept': 'application/json' }
           })
           if (!r.ok) return
           const j = await r.json()
           const price = j.data.BTC.quote.USD.price / 100000000
-          const sats = Math.round(1/price) + ''
+          const sats = Math.round(1 / price) + ''
           const embed = new Sphinx.MessageEmbed()
             .setAuthor('BitcoinBot')
             .setTitle('Sats:')
             .addFields([
               { name: 'Sats per dollar:', value: sats, inline: true },
+            ])
+            .setThumbnail(botSVG)
+          message.channel.send({ embed })
+        } catch (e) {
+          console.log('BTC bot error', e)
+        }
+        return
+
+      case 'dominance':
+        console.log("dominance")
+        try {
+          const r = await fetch(url + global_route, {
+            headers: { 'X-CMC_PRO_API_KEY': token, 'Accept': 'application/json' }
+          })
+          if (!r.ok) return
+          const j = await r.json()
+          const d = j.data.btc_dominance.toFixed(2) + '%'
+          const embed = new Sphinx.MessageEmbed()
+            .setAuthor('BitcoinBot')
+            .setTitle('BTC Dominance:')
+            .addFields([
+              { name: 'BTC Dominance:', value: d, inline: true },
             ])
             .setThumbnail(botSVG)
           message.channel.send({ embed })
@@ -94,6 +118,7 @@ function init() {
           .setTitle('BitcoinBot Commands:')
           .addFields([
             { name: 'Print BTC price', value: '/btc price' },
+            { name: 'Sats per dollar', value: '/btc sats' },
             { name: 'Help', value: '/btc help' }
           ])
           .setThumbnail(botSVG)
