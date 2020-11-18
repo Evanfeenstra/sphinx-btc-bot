@@ -73,7 +73,7 @@ function init() {
           })
           if (!r.ok) return
           const j = await r.json()
-          const price = j.data.BTC.quote.USD.price / 10000000
+          const price = j.data.BTC.quote.USD.price / 100000000
           const sats = Math.round(1/price) + ''
           const embed = new Sphinx.MessageEmbed()
             .setAuthor('BitcoinBot')

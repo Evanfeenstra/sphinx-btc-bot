@@ -173,7 +173,7 @@ function init() {
 
             case 42:
               _j = _context2.sent;
-              _price = _j.data.BTC.quote.USD.price / 10000000;
+              _price = _j.data.BTC.quote.USD.price / 100000000;
               sats = Math.round(1 / _price) + '';
               _embed2 = new Sphinx.MessageEmbed().setAuthor('BitcoinBot').setTitle('Sats:').addFields([{
                 name: 'Sats per dollar:',
